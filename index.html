@@ -63,6 +63,25 @@
             max-width: 400px;
         }
 
+        .timeline-btn {
+            margin-top: 30px;
+            padding: 12px 30px;
+            background: rgba(255, 255, 255, 0.15);
+            color: #fff;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-radius: 25px;
+            font-size: 1em;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 600;
+        }
+
+        .timeline-btn:hover {
+            background: rgba(255, 255, 255, 0.25);
+            border-color: rgba(255, 255, 255, 0.5);
+            transform: translateY(-2px);
+        }
+
         .slide-area {
             background: #f5f5f5;
             display: flex;
@@ -265,6 +284,222 @@
             box-shadow: 0 4px 15px rgba(0,0,0,0.3);
         }
 
+        /* Modal Timeline */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 2000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            animation: fadeIn 0.3s ease;
+        }
+
+        .modal.active {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal-content {
+            background: white;
+            width: 90%;
+            max-width: 1200px;
+            max-height: 90vh;
+            border-radius: 20px;
+            overflow-y: auto;
+            position: relative;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { opacity: 0; transform: translateY(-50px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .modal-close {
+            position: sticky;
+            top: 20px;
+            right: 20px;
+            float: right;
+            font-size: 32px;
+            font-weight: bold;
+            color: #666;
+            cursor: pointer;
+            background: white;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 10;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .modal-close:hover {
+            color: #2d5016;
+            background: #f5f5f5;
+        }
+
+        .modal-timeline {
+            padding: 50px;
+        }
+
+        .modal-header {
+            text-align: center;
+            margin-bottom: 50px;
+            position: relative;
+        }
+
+        .modal-header::after {
+            content: '';
+            position: absolute;
+            bottom: -20px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 4px;
+            background: linear-gradient(90deg, #2d5a27, #4a9441, #2d5a27);
+            border-radius: 2px;
+        }
+
+        .modal-header h2 {
+            color: #2d5a27;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+            border: none;
+            padding: 0;
+        }
+
+        .modal-subtitle {
+            color: #666;
+            font-size: 1.1rem;
+            font-weight: 400;
+        }
+
+        .timeline-vertical {
+            position: relative;
+            padding: 40px 0;
+        }
+
+        .timeline-vertical::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 4px;
+            height: 100%;
+            background: linear-gradient(180deg, #2d5a27, #4a9441, #ce2b37);
+            border-radius: 2px;
+        }
+
+        .timeline-item-v {
+            display: flex;
+            justify-content: flex-end;
+            padding-right: calc(50% + 40px);
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .timeline-item-v:nth-child(even) {
+            justify-content: flex-start;
+            padding-right: 0;
+            padding-left: calc(50% + 40px);
+        }
+
+        .timeline-content-v {
+            background: #fafafa;
+            border-radius: 12px;
+            padding: 20px 25px;
+            max-width: 400px;
+            position: relative;
+            border-left: 4px solid #2d5a27;
+            transition: all 0.3s ease;
+        }
+
+        .timeline-content-v:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 10px 30px rgba(45, 90, 39, 0.15);
+        }
+
+        .timeline-item-v:nth-child(even) .timeline-content-v {
+            border-left: none;
+            border-right: 4px solid #2d5a27;
+        }
+
+        .timeline-item-v.liberation .timeline-content-v {
+            border-color: #ce2b37;
+            background: linear-gradient(135deg, #fff8f8 0%, #fafafa 100%);
+        }
+
+        .timeline-date-v {
+            display: inline-block;
+            background: #2d5a27;
+            color: white;
+            padding: 6px 14px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .timeline-item-v.liberation .timeline-date-v {
+            background: linear-gradient(90deg, #008c45, #ffffff, #ce2b37);
+            color: #333;
+        }
+
+        .timeline-title-v {
+            color: #333;
+            font-size: 1.1rem;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .timeline-desc-v {
+            color: #666;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        .timeline-dot-v {
+            position: absolute;
+            top: 25px;
+            width: 20px;
+            height: 20px;
+            background: #2d5a27;
+            border: 4px solid white;
+            border-radius: 50%;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.2);
+        }
+
+        .timeline-item-v:not(:nth-child(even)) .timeline-dot-v {
+            right: calc(50% - 10px);
+        }
+
+        .timeline-item-v:nth-child(even) .timeline-dot-v {
+            left: calc(50% - 10px);
+        }
+
+        .timeline-item-v.liberation .timeline-dot-v {
+            background: #ce2b37;
+            width: 26px;
+            height: 26px;
+        }
+
+        .timeline-item-v.liberation:not(:nth-child(even)) .timeline-dot-v {
+            right: calc(50% - 13px);
+        }
+
+        .timeline-item-v.liberation:nth-child(even) .timeline-dot-v {
+            left: calc(50% - 13px);
+        }
+
         @media (max-width: 1200px) {
             .main-container {
                 grid-template-columns: 1fr;
@@ -284,6 +519,33 @@
 
             .two-columns, .image-with-text {
                 grid-template-columns: 1fr;
+            }
+
+            .timeline-vertical::before {
+                left: 20px;
+            }
+
+            .timeline-item-v,
+            .timeline-item-v:nth-child(even) {
+                padding-left: 60px;
+                padding-right: 0;
+                justify-content: flex-start;
+            }
+
+            .timeline-item-v .timeline-dot-v,
+            .timeline-item-v:nth-child(even) .timeline-dot-v {
+                left: 10px;
+                right: auto;
+            }
+
+            .timeline-content-v,
+            .timeline-item-v:nth-child(even) .timeline-content-v {
+                border-left: 4px solid #2d5a27;
+                border-right: none;
+            }
+
+            .modal-timeline {
+                padding: 30px 20px;
             }
         }
 
@@ -324,6 +586,7 @@
             <p class="description">
                 La storia delle formazioni partigiane che liberarono la Lombardia orientale dal nazi-fascismo
             </p>
+            <button class="timeline-btn" onclick="openTimeline()">📅 Cronologia Completa</button>
         </div>
 
         <!-- Area delle slide -->
@@ -676,6 +939,111 @@
         <button class="nav-btn" id="next-btn" onclick="changeSlide(1)">Successiva →</button>
     </div>
 
+    <!-- Modal Timeline -->
+    <div id="timelineModal" class="modal">
+        <div class="modal-content">
+            <span class="modal-close" onclick="closeTimeline()">&times;</span>
+            <div class="modal-timeline">
+                <div class="modal-header">
+                    <h2>La Resistenza a Brescia</h2>
+                    <p class="modal-subtitle">Cronologia delle Fiamme Verdi 1943-1945</p>
+                </div>
+
+                <div class="timeline-vertical">
+                    <div class="timeline-item-v">
+                        <div class="timeline-dot-v"></div>
+                        <div class="timeline-content-v">
+                            <span class="timeline-date-v">8 Settembre 1943</span>
+                            <h3 class="timeline-title-v">Armistizio</h3>
+                            <p class="timeline-desc-v">Annuncio dell'armistizio da parte del Gen. Badoglio. Inizio dell'occupazione tedesca dell'Italia.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item-v">
+                        <div class="timeline-dot-v"></div>
+                        <div class="timeline-content-v">
+                            <span class="timeline-date-v">10 Settembre 1943</span>
+                            <h3 class="timeline-title-v">Occupazione di Brescia</h3>
+                            <p class="timeline-desc-v">Le truppe tedesche occupano Brescia. Inizia lo sbandamento dell'esercito italiano.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item-v">
+                        <div class="timeline-dot-v"></div>
+                        <div class="timeline-content-v">
+                            <span class="timeline-date-v">30 Novembre 1943</span>
+                            <h3 class="timeline-title-v">Nascita delle Fiamme Verdi</h3>
+                            <p class="timeline-desc-v">In casa Piotti, via Aleardi, si costituiscono le Fiamme Verdi sotto la guida di Romolo Ragnoli (Vittorio).</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item-v">
+                        <div class="timeline-dot-v"></div>
+                        <div class="timeline-content-v">
+                            <span class="timeline-date-v">Gennaio 1944</span>
+                            <h3 class="timeline-title-v">Ondata di arresti</h3>
+                            <p class="timeline-desc-v">Arresti di massa colpiscono i leader partigiani: Padre Manziana, Pelosi, Trebeschi, Lunardi vengono catturati.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item-v">
+                        <div class="timeline-dot-v"></div>
+                        <div class="timeline-content-v">
+                            <span class="timeline-date-v">6 Febbraio 1944</span>
+                            <h3 class="timeline-title-v">Esecuzione Lunardi e Margheriti</h3>
+                            <p class="timeline-desc-v">Astolfo Lunardi ed Ermanno Margheriti vengono fucilati. Il loro sacrificio rafforza la determinazione dei partigiani.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item-v">
+                        <div class="timeline-dot-v"></div>
+                        <div class="timeline-content-v">
+                            <span class="timeline-date-v">Marzo 1944</span>
+                            <h3 class="timeline-title-v">Scioperi nelle fabbriche</h3>
+                            <p class="timeline-desc-v">Blocchi del lavoro negli stabilimenti contro le deportazioni. La Resistenza si estende al mondo operaio.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item-v">
+                        <div class="timeline-dot-v"></div>
+                        <div class="timeline-content-v">
+                            <span class="timeline-date-v">9 Giugno 1944</span>
+                            <h3 class="timeline-title-v">Proclama Brigata "Tito Speri"</h3>
+                            <p class="timeline-desc-v">La Brigata Fiamme Verdi "Tito Speri" emana il suo proclama in Valcamonica. Estate di intensificazione della guerriglia.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item-v">
+                        <div class="timeline-dot-v"></div>
+                        <div class="timeline-content-v">
+                            <span class="timeline-date-v">3 Luglio 1944</span>
+                            <h3 class="timeline-title-v">Attacco di Cevo</h3>
+                            <p class="timeline-desc-v">Attacco partigiano seguito da brutale rappresaglia fascista. Il paese viene incendiato, numerosi i civili uccisi.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item-v">
+                        <div class="timeline-dot-v"></div>
+                        <div class="timeline-content-v">
+                            <span class="timeline-date-v">Febbraio 1945</span>
+                            <h3 class="timeline-title-v">Prima Battaglia del Mortirolo</h3>
+                            <p class="timeline-desc-v">Le Fiamme Verdi respingono i fascisti della "Tagliamento". Vittoria decisiva nella guerriglia di montagna.</p>
+                        </div>
+                    </div>
+
+                    <div class="timeline-item-v liberation">
+                        <div class="timeline-dot-v"></div>
+                        <div class="timeline-content-v">
+                            <span class="timeline-date-v">26-27 Aprile 1945</span>
+                            <h3 class="timeline-title-v">Liberazione di Brescia</h3>
+                            <p class="timeline-desc-v">Insurrezione generale. All'alba del 27 aprile la città è completamente libera. Le campane annunciano la vittoria.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
     <script>
         let currentSlide = 0;
         const slides = document.querySelectorAll('.slide');
@@ -716,6 +1084,31 @@
 
         // Inizializza
         showSlide(0);
+
+        // Funzioni Timeline Modal
+        function openTimeline() {
+            document.getElementById('timelineModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeTimeline() {
+            document.getElementById('timelineModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
+        // Chiudi modal cliccando fuori
+        document.getElementById('timelineModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeTimeline();
+            }
+        });
+
+        // Chiudi modal con tasto ESC
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeTimeline();
+            }
+        });
     </script>
 </body>
 </html>
