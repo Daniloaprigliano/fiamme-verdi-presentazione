@@ -587,6 +587,7 @@
                 La storia delle formazioni partigiane che liberarono la Lombardia orientale dal nazi-fascismo
             </p>
             <button class="timeline-btn" onclick="openTimeline()">📅 Cronologia Completa</button>
+            <button class="timeline-btn" onclick="openCanva()">📊 Presentazione Canva</button>
         </div>
 
         <!-- Area delle slide -->
@@ -1044,6 +1045,22 @@
         </div>
     </div>
 
+    <!-- Modal Canva -->
+    <div id="canvaModal" class="modal">
+        <div class="modal-content" style="max-width: 95%; max-height: 95vh;">
+            <span class="modal-close" onclick="closeCanva()">&times;</span>
+            <div style="padding: 20px;">
+                <iframe
+                    loading="lazy"
+                    style="width: 100%; height: 80vh; border: none; border-radius: 10px;"
+                    src="https://www.canva.com/design/DAGfkvTKEU8/nG3S6zFoBZkaHyfL2l5ZKw/view?embed"
+                    allowfullscreen="allowfullscreen"
+                    allow="fullscreen">
+                </iframe>
+            </div>
+        </div>
+    </div>
+
     <script>
         let currentSlide = 0;
         const slides = document.querySelectorAll('.slide');
@@ -1096,6 +1113,17 @@
             document.body.style.overflow = 'auto';
         }
 
+        // Funzioni Canva Modal
+        function openCanva() {
+            document.getElementById('canvaModal').classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeCanva() {
+            document.getElementById('canvaModal').classList.remove('active');
+            document.body.style.overflow = 'auto';
+        }
+
         // Chiudi modal cliccando fuori
         document.getElementById('timelineModal').addEventListener('click', function(e) {
             if (e.target === this) {
@@ -1103,10 +1131,17 @@
             }
         });
 
+        document.getElementById('canvaModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeCanva();
+            }
+        });
+
         // Chiudi modal con tasto ESC
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
                 closeTimeline();
+                closeCanva();
             }
         });
     </script>
