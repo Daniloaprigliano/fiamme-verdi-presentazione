@@ -1,0 +1,721 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Le Fiamme Verdi - Resistenza Bresciana 1943-1945</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #1a472a;
+            color: #fff;
+            overflow: hidden;
+            height: 100vh;
+        }
+
+        .main-container {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            height: 100vh;
+            gap: 0;
+        }
+
+        .sidebar {
+            background: linear-gradient(135deg, #1a472a 0%, #2d5016 100%);
+            padding: 60px 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            position: relative;
+        }
+
+        .sidebar .flame {
+            font-size: 5em;
+            margin-bottom: 30px;
+        }
+
+        .sidebar h1 {
+            font-size: 3em;
+            color: #fff;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .sidebar .subtitle {
+            font-size: 1.4em;
+            color: #e0e0e0;
+            margin-bottom: 40px;
+            line-height: 1.5;
+        }
+
+        .sidebar .description {
+            font-size: 1.1em;
+            color: #ccc;
+            line-height: 1.6;
+            max-width: 400px;
+        }
+
+        .slide-area {
+            background: #f5f5f5;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 40px;
+            position: relative;
+        }
+
+        .slide {
+            display: none;
+            width: 100%;
+            max-width: 100%;
+            max-height: 85vh;
+            padding: 50px;
+            background: #fff;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.15);
+            color: #333;
+            animation: fadeIn 0.5s ease-in;
+            overflow-y: auto;
+        }
+
+        .slide.active {
+            display: block;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .slide h2 {
+            font-size: 2.2em;
+            color: #2d5016;
+            margin-bottom: 25px;
+            border-bottom: 3px solid #1a472a;
+            padding-bottom: 15px;
+        }
+
+        .slide h3 {
+            font-size: 1.6em;
+            color: #1a472a;
+            margin: 25px 0 15px 0;
+        }
+
+        .slide p, .slide li {
+            font-size: 1.15em;
+            line-height: 1.7;
+            margin-bottom: 14px;
+            color: #444;
+        }
+
+        .slide ul {
+            list-style-position: inside;
+            margin-left: 20px;
+        }
+
+        .slide ul li {
+            margin-bottom: 12px;
+        }
+
+        .motto {
+            background: #1a472a;
+            color: #fff;
+            padding: 22px;
+            border-radius: 10px;
+            font-size: 1.35em;
+            font-weight: bold;
+            text-align: center;
+            margin: 25px 0;
+            border-left: 6px solid #fff;
+        }
+
+        .timeline-item {
+            border-left: 4px solid #2d5016;
+            padding-left: 22px;
+            margin: 20px 0;
+            position: relative;
+        }
+
+        .timeline-item::before {
+            content: '';
+            width: 15px;
+            height: 15px;
+            background: #2d5016;
+            border: 3px solid #fff;
+            border-radius: 50%;
+            position: absolute;
+            left: -10px;
+            top: 5px;
+        }
+
+        .timeline-item .date {
+            font-weight: bold;
+            color: #1a472a;
+            font-size: 1.25em;
+            margin-bottom: 8px;
+        }
+
+        .two-columns {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            margin-top: 25px;
+        }
+
+        .highlight-box {
+            background: #f0f7f0;
+            border-left: 5px solid #2d5016;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+
+        .quote {
+            font-style: italic;
+            color: #555;
+            padding: 20px;
+            border-left: 4px solid #1a472a;
+            margin: 22px 0;
+            background: #f9f9f9;
+        }
+
+        .historic-image {
+            width: 100%;
+            max-width: 800px;
+            height: auto;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            margin: 25px auto;
+            display: block;
+        }
+
+        .image-caption {
+            text-align: center;
+            font-size: 0.95em;
+            color: #666;
+            font-style: italic;
+            margin-top: 10px;
+            margin-bottom: 20px;
+        }
+
+        .image-with-text {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 35px;
+            align-items: start;
+            margin: 25px 0;
+        }
+
+        .image-with-text img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+
+        .navigation {
+            position: fixed;
+            bottom: 40px;
+            right: 50px;
+            display: flex;
+            gap: 20px;
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: #1a472a;
+            color: #fff;
+            border: none;
+            padding: 15px 30px;
+            font-size: 1.1em;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .nav-btn:hover {
+            background: #2d5016;
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.4);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .slide-counter {
+            position: fixed;
+            top: 40px;
+            right: 50px;
+            background: rgba(26, 71, 42, 0.95);
+            color: #fff;
+            padding: 12px 25px;
+            border-radius: 30px;
+            font-size: 1.1em;
+            z-index: 1000;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        @media (max-width: 1200px) {
+            .main-container {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                display: none;
+            }
+
+            .slide {
+                padding: 35px;
+            }
+
+            .slide h2 {
+                font-size: 1.8em;
+            }
+
+            .two-columns, .image-with-text {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .slide {
+                padding: 25px;
+            }
+
+            .slide h2 {
+                font-size: 1.5em;
+            }
+
+            .navigation {
+                bottom: 20px;
+                right: 20px;
+                left: 20px;
+                justify-content: space-between;
+            }
+
+            .nav-btn {
+                padding: 12px 20px;
+                font-size: 1em;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="slide-counter">
+        <span id="current-slide">1</span> / <span id="total-slides">13</span>
+    </div>
+
+    <div class="main-container">
+        <!-- Sidebar fissa -->
+        <div class="sidebar">
+            <div class="flame">🔥</div>
+            <h1>LE FIAMME VERDI</h1>
+            <p class="subtitle">La Resistenza Cattolica Bresciana<br>1943-1945</p>
+            <p class="description">
+                La storia delle formazioni partigiane che liberarono la Lombardia orientale dal nazi-fascismo
+            </p>
+        </div>
+
+        <!-- Area delle slide -->
+        <div class="slide-area">
+            <!-- Slide 1: Introduzione -->
+            <div class="slide active">
+                <h2>Chi erano le Fiamme Verdi?</h2>
+
+                <div class="image-with-text">
+                    <div>
+                        <p>Emblema della <strong>Resistenza cattolica</strong>, le Fiamme Verdi furono formazioni partigiane nate a <strong>Brescia nel 1943</strong>.</p>
+
+                        <div class="highlight-box">
+                            <p><strong>Il nome</strong> si riferisce alle <em>mostrine verdi degli Alpini</em>, dai cui reparti proveniva la gran parte degli ex-militari che costituirono le primissime compagini.</p>
+                        </div>
+
+                        <h3>Zone di operazione</h3>
+                        <ul>
+                            <li><strong>Lombardia orientale</strong>: Valcamonica, Valsabbia, Valtrompia</li>
+                            <li><strong>Reggio Emilia</strong></li>
+                        </ul>
+                    </div>
+                    <div>
+                        <img src="https://www.fiammeverdibrescia.it/wordpress/wp-content/uploads/2014/08/Uno-sguardo-verso-la-liberta-1945.jpg" alt="Uno sguardo verso la libertà">
+                        <p class="image-caption">Uno sguardo verso la libertà (1945)<br>© Archivio storico della Resistenza bresciana</p>
+                    </div>
+                </div>
+
+                <p style="margin-top: 20px;">Le Fiamme Verdi affondavano le radici nel <strong>cattolicesimo sociale</strong>, nella Chiesa e in tutte le organizzazioni ecclesiastiche del territorio. In queste zone ebbero un peso maggiore rispetto a tutte le altre formazioni, comprese quelle comuniste.</p>
+            </div>
+
+            <!-- Slide 2: I Fondatori -->
+            <div class="slide">
+                <h2>I Fondatori e la nascita</h2>
+
+                <div class="timeline-item">
+                    <div class="date">30 novembre 1943</div>
+                    <p>Riunione in casa dell'ing. <strong>Mario Piotti</strong> a Brescia, via Aleardi</p>
+                </div>
+
+                <h3>I fondatori principali</h3>
+                <div class="two-columns">
+                    <div>
+                        <p><strong>Gastone Franchetti</strong><br>Tenente degli Alpini</p>
+                        <p><strong>Rino Dusatti</strong><br>Organizzatore</p>
+                        <p><strong>Gen. Luigi Masini</strong><br>Comandante generale</p>
+                    </div>
+                    <div>
+                        <p><strong>Ferruccio Lorenzini</strong><br>Comandante Valcamonica</p>
+                        <p><strong>Giacomo Perlasca</strong><br>Comandante Valsabbia</p>
+                        <p><strong>Peppino Pelosi</strong><br>Comandante Valtrompia</p>
+                    </div>
+                </div>
+
+                <div class="highlight-box" style="margin-top: 25px;">
+                    <p>Nella riunione del 30 novembre furono nominati i comandanti dei tre battaglioni iniziali e steso il regolamento delle Fiamme Verdi.</p>
+                </div>
+            </div>
+
+            <!-- Slide 3: Principi e Motto -->
+            <div class="slide">
+                <h2>I Principi Fondamentali</h2>
+
+                <div class="motto">
+                    «Morte al fascismo; libertà all'Italia»
+                </div>
+
+                <h3>Caratteristiche dell'azione partigiana</h3>
+                <ul>
+                    <li><strong>Obiettivi militari</strong>, non politici o partitici</li>
+                    <li><strong>Formazione apartitica</strong>: al loro interno militavano popolari, comunisti, socialisti, azionisti, liberali, badogliani e semplici cittadini</li>
+                    <li><strong>Rifiuto del proselitismo</strong> partitico per mantenere l'unità</li>
+                    <li><strong>Lotta contro il fascismo</strong>, non contro i fascisti come persone</li>
+                    <li><strong>Dignità della persona</strong> sempre al centro</li>
+                </ul>
+
+                <div class="quote" style="margin-top: 25px;">
+                    "Il pentimento, la conversione, la redenzione – principi appartenenti alla tradizione della cultura cattolica – non cessarono mai di essere riconosciuti e predicati."
+                </div>
+            </div>
+
+            <!-- Slide 4: Figure chiave -->
+            <div class="slide">
+                <h2>Figure chiave del movimento</h2>
+
+                <div class="timeline-item">
+                    <div class="date">Teresio Olivelli</div>
+                    <p>Arrivato a Brescia l'11 novembre 1943. Fondatore e direttore del giornale clandestino <em>"Il Ribelle"</em>. Uno dei più intelligenti pensatori e organizzatori del movimento partigiano italiano. Arrestato il 27 aprile 1944, morì nel campo di Ersbruck nel gennaio 1945.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="date">Romolo Ragnoli (Vittorio)</div>
+                    <p>Tenente degli alpini reduce dalla campagna di Russia. Comandante della Brigata "Tito Speri" e poi delle divisioni in Valle Camonica. Organizzatore militare di eccezionale capacità.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="date">Astolfo Lunardi</div>
+                    <p>La sua casa in Tresanda del Sale divenne il quartier generale della Resistenza bresciana. Fucilato il 6 febbraio 1944 insieme a Ermanno Margheriti.</p>
+                </div>
+            </div>
+
+            <!-- Slide 5: 8 settembre 1943 -->
+            <div class="slide">
+                <h2>1943: L'inizio della Resistenza</h2>
+
+                <img src="https://www.fiammeverdibrescia.it/wordpress/wp-content/uploads/2014/08/Brescia-Piazzale-Arnaldo-inverno-1943-44.jpg" alt="Brescia inverno 1943-44" class="historic-image">
+                <p class="image-caption">Brescia, Piazzale Arnaldo, inverno 1943-44<br>© Archivio storico della Resistenza bresciana</p>
+
+                <div class="timeline-item">
+                    <div class="date">8 settembre 1943</div>
+                    <p><strong>Armistizio di Cassibile.</strong> Il gen. Badoglio annuncia l'armistizio tra Italia e Anglo-Americani. Il re fugge a Brindisi. L'esercito italiano è allo sbando.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="date">10 settembre 1943</div>
+                    <p><strong>Occupazione tedesca di Brescia.</strong> I tedeschi da alleati diventano nemici e occupano la città con rigido controllo.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="date">20 settembre 1943</div>
+                    <p>Primi gruppi di resistenza guidati da <strong>Giuseppe Pelosi</strong>. Raccolta di sbandati ed ex-militari nelle valli.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="date">13-14 novembre 1943</div>
+                    <p><strong>Primi caduti a Brescia:</strong> Arnaldo Dall'Angelo, Guglielmo Perinelli, Rolando Pezzagno. Rappresaglia fascista a piazza Rovetta.</p>
+                </div>
+            </div>
+
+            <!-- Slide 6: Fine 1943 -->
+            <div class="slide">
+                <h2>Fine 1943: Organizzazione e sacrifici</h2>
+
+                <div class="image-with-text">
+                    <div>
+                        <img src="https://www.fiammeverdibrescia.it/wordpress/wp-content/uploads/2014/08/Partigiani-in-montagna-1943.jpg" alt="Partigiani in montagna 1943">
+                        <p class="image-caption">Partigiani in montagna (1943)<br>© Archivio storico della Resistenza bresciana</p>
+                    </div>
+                    <div>
+                        <div class="timeline-item">
+                            <div class="date">30 novembre 1943</div>
+                            <p><strong>Formazione delle Fiamme Verdi</strong> in casa Piotti. Costituzione dei tre battaglioni: Valcamonica, Valsabbia, Valtrompia.</p>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="date">Dicembre 1943</div>
+                            <p>La Brigata <strong>"Tito Speri"</strong>, comandata da Romolo Ragnoli, entra a far parte delle Fiamme Verdi.</p>
+                        </div>
+
+                        <div class="timeline-item">
+                            <div class="date">8 dicembre 1943</div>
+                            <p><strong>Cattura e morte di Ferruccio Lorenzini.</strong> Fucilato il 1° gennaio 1944 in Piazza d'Armi a Brescia.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="highlight-box" style="margin-top: 25px;">
+                    <p>Il giuramento delle Fiamme Verdi: <em>"Giuro di combattere finché tedeschi e fascisti non siano cacciati definitivamente dal suolo della Patria..."</em></p>
+                </div>
+            </div>
+
+            <!-- Slide 7: 1944 - Anno terribile -->
+            <div class="slide">
+                <h2>1944: L'anno più duro</h2>
+
+                <img src="https://www.fiammeverdibrescia.it/wordpress/wp-content/uploads/2014/08/Staffette-partigiane-sulla-Corna-Blacca-1944-copia.jpg" alt="Staffette partigiane" class="historic-image">
+                <p class="image-caption">Staffette partigiane sulla Corna Blacca (1944)<br>© Archivio storico della Resistenza bresciana</p>
+
+                <div class="timeline-item">
+                    <div class="date">Gennaio 1944</div>
+                    <p>Ondata di arresti: padre Carlo Manziana, Peppino Pelosi, Andrea Trebeschi, Astolfo Lunardi, Ermanno Margheriti. Tra il 13 e il 18 gennaio: disgregazione dei nuclei valsabbini.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="date">6 febbraio 1944</div>
+                    <p><strong>Fucilazione di Lunardi e Margheriti.</strong> "Era come se stessero ammazzando padre e figlio."</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="date">14-24 febbraio 1944</div>
+                    <p>Processo e fucilazione di <strong>Giacomo Perlasca</strong> (24 anni) e <strong>Mario Bettinzoli</strong> (22 anni), organizzatori della resistenza in Valsabbia.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="date">29 febbraio 1944</div>
+                    <p>A Verona viene fucilato <strong>Giuseppe Pelosi</strong>, primo organizzatore delle formazioni in Valtrompia.</p>
+                </div>
+            </div>
+
+            <!-- Slide 8: 1944 - Olivelli e ripresa -->
+            <div class="slide">
+                <h2>1944: Arresti eccellenti e ripresa</h2>
+
+                <div class="timeline-item">
+                    <div class="date">27 aprile 1944</div>
+                    <p><strong>Arresto di Teresio Olivelli.</strong> Inizia la sua lunga agonia tra deportazioni e torture. Morirà a Ersbruck nel gennaio 1945.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="date">20 maggio 1944</div>
+                    <p><strong>Morte di don Battista Picelli</strong> (29 anni), curato di Malonno, brutalmente ucciso mentre svolgeva la sua missione presso le formazioni partigiane.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="date">Estate 1944</div>
+                    <p><strong>Ripresa delle attività.</strong> Nuovi ribelli affluiscono alle formazioni. Gli internati militari tornano dalla Svizzera. Il 9 giugno: proclama della Brigata "Tito Speri" in Valcamonica.</p>
+                </div>
+
+                <div class="quote">
+                    "L'estate va avviandosi sotto i migliori auspici e le attività di contrasto al nazi-fascismo riprendono notevole forza e vitalità."
+                </div>
+            </div>
+
+            <!-- Slide 9: Le rappresaglie -->
+            <div class="slide">
+                <h2>Estate 1944: Rappresaglie nazifasciste</h2>
+
+                <img src="https://www.fiammeverdibrescia.it/wordpress/wp-content/uploads/2014/08/Labitato-di-Cevo-dopo-lincendio-del-luglio-1944.jpg" alt="Cevo dopo l'incendio" class="historic-image">
+                <p class="image-caption">L'abitato di Cevo dopo l'incendio del luglio 1944<br>© Archivio storico della Resistenza bresciana</p>
+
+                <div class="timeline-item">
+                    <div class="date">3 luglio 1944</div>
+                    <p><strong>Cevo:</strong> 151 case distrutte, 12 saccheggiate, 48 rovinate, 800 senzatetto su 1000 abitanti. 5 morti.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="date">14 agosto 1944</div>
+                    <p><strong>Corteno e Santicolo:</strong> cade <strong>Antonio Schivardi</strong>, ultimo difensore dopo aver fatto riparare la sua squadra. Il suo corpo è gettato tra le fiamme di una baita.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="date">15 agosto 1944</div>
+                    <p><strong>Bovegno:</strong> 15 morti nella più violenta rappresaglia di quei mesi. Il paese era ormai controllato dalle formazioni partigiane.</p>
+                </div>
+
+                <div class="highlight-box" style="margin-top: 25px;">
+                    <p>Il comandante Vittorio ai suoi uomini: <em>"Il sangue versato grida vendetta e noi soli possiamo farla. Fiamme Verdi! Mostratevi degni dei vostri Padri: vendicate i morti, difendete i perseguitati e gli inermi."</em></p>
+                </div>
+            </div>
+
+            <!-- Slide 10: Le battaglie del Mortirolo -->
+            <div class="slide">
+                <h2>Le battaglie del Mortirolo</h2>
+
+                <div class="image-with-text">
+                    <div>
+                        <img src="https://www.fiammeverdibrescia.it/wordpress/wp-content/uploads/2014/08/Fiamme-Verdi-in-Mortirolo-1945.jpg" alt="Fiamme Verdi in Mortirolo">
+                        <p class="image-caption">Fiamme Verdi in Mortirolo (1945)<br>© Archivio storico della Resistenza bresciana</p>
+                    </div>
+                    <div>
+                        <h3>Prima battaglia (22-27 febbraio 1945)</h3>
+                        <p>Oltre 200 Fiamme Verdi affrontano i fascisti della "Tagliamento" usando per la prima volta la tattica della guerra di posizione. Vittoria completa con pochi sacrifici.</p>
+
+                        <div class="highlight-box">
+                            <p>I partigiani, nascosti sotto la neve, sbaragliano gli attacchi fascisti. Il 27 febbraio respingono anche l'aiuto tedesco arrivato dalla Valtellina.</p>
+                        </div>
+
+                        <h3 style="margin-top: 20px;">Seconda battaglia (10 aprile 1945)</h3>
+                        <p>Poco più di 200 Fiamme Verdi contro oltre <strong>2000 nazifascisti</strong> della legione "Tagliamento" ben armati. Battaglia durissima ma i fascisti non passano.</p>
+                    </div>
+                </div>
+
+                <div class="quote">
+                    "A Mortirolo i fascisti non passeranno più."
+                </div>
+            </div>
+
+            <!-- Slide 11: La Liberazione -->
+            <div class="slide">
+                <h2>25-27 aprile 1945: La Liberazione</h2>
+
+                <img src="https://www.fiammeverdibrescia.it/wordpress/wp-content/uploads/2014/08/Partigiani-in-citta-1945.jpg" alt="Partigiani in città" class="historic-image">
+                <p class="image-caption">Partigiani in città (1945)<br>© Archivio storico della Resistenza bresciana</p>
+
+                <div class="timeline-item">
+                    <div class="date">25 aprile 1945</div>
+                    <p>A Milano è già in atto l'insurrezione. Mussolini non è più a Gargnano. Gli Alleati hanno superato il Po.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="date">26 aprile 1945, ore 12:00</div>
+                    <p><strong>Suonano le campane delle Orsoline a Brescia.</strong> È il segnale atteso: inizia l'insurrezione in città. Il colonnello Zani, comandante del CLN, aveva stabilito le 14:00, ma l'entusiasmo anticipa tutto.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="date">27 aprile 1945, alba</div>
+                    <p><strong>Brescia è liberata.</strong> La città è completamente in mano alle formazioni patriottiche. Nel pomeriggio, in piazza della Vittoria, arrivano i primi carri armati americani.</p>
+                </div>
+
+                <div class="timeline-item">
+                    <div class="date">1-2 maggio 1945</div>
+                    <p><strong>Ultimi combattimenti al Mortirolo.</strong> Muore Bortolo Fioletti (Poldo), 18 anni: ultimo caduto delle Fiamme Verdi.</p>
+                </div>
+            </div>
+
+            <!-- Slide 12: Il congedo -->
+            <div class="slide">
+                <h2>7 giugno 1945: Il congedo</h2>
+
+                <div class="quote" style="font-size: 0.95em;">
+                    <p><strong>Romolo Ragnoli ai suoi uomini:</strong></p>
+                    <p style="margin-top: 15px;">"Fiamme Verdi della divisione «Tito Speri»! La guerra è finita, e con essa è finito il nostro compito attuale. Dobbiamo smobilitare.</p>
+                    <p style="margin-top: 10px;">Ci eravamo uniti per scacciare i tedeschi e liberare l'Italia dal giogo fascista. La vittoria ci ha arriso splendida, completa.</p>
+                    <p style="margin-top: 10px;">Saluto i nostri Caduti. Chi di noi li può dimenticare? Essi hanno segnato di rosso le tappe della nostra vittoria.</p>
+                    <p style="margin-top: 10px;">Fiamme Verdi, in alto i gagliardetti, in alto la bandiera! Conservate l'arma più tagliente e più efficace: il vostro spirito onesto e fiero, pronto a tutte le battaglie per ogni causa santa."</p>
+                </div>
+
+                <div class="highlight-box" style="margin-top: 25px;">
+                    <p>Le Fiamme Verdi contavano circa <strong>2.800 partigiani</strong>, più di tutte le altre formazioni bresciane messe insieme.</p>
+                </div>
+            </div>
+
+            <!-- Slide 13: Conclusione -->
+            <div class="slide">
+                <h2>L'eredità delle Fiamme Verdi</h2>
+
+                <img src="https://www.fiammeverdibrescia.it/wordpress/wp-content/uploads/2014/08/Partigiani-in-montagna-19451.jpg" alt="Partigiani in montagna 1945" class="historic-image" style="max-width: 650px;">
+                <p class="image-caption">Partigiani in montagna (1945)<br>© Archivio storico della Resistenza bresciana</p>
+
+                <div class="highlight-box">
+                    <h3 style="margin-top: 0;">Venti mesi di lotta</h3>
+                    <p>Settembre 1943 - Maggio 1945</p>
+                </div>
+
+                <h3>I numeri della Resistenza bresciana</h3>
+                <ul>
+                    <li><strong>Fiamme Verdi:</strong> circa 2.800 partigiani</li>
+                    <li><strong>Brigate Garibaldi:</strong> circa 1.000</li>
+                    <li><strong>Giustizia e Libertà:</strong> 180</li>
+                    <li><strong>Brigata Matteotti:</strong> 185</li>
+                </ul>
+
+                <div class="motto" style="margin-top: 30px;">
+                    Fame, freddo, morte, paura<br>
+                    ma anche<br>
+                    Lotta, coraggio, libertà, giustizia
+                </div>
+
+                <p style="text-align: center; margin-top: 30px; font-size: 1.05em; color: #666;">
+                    Le Fiamme Verdi lasciarono le armi e tornarono alla vita civile e democratica<br>
+                    della nuova Italia repubblicana, portando con sé un'esperienza gloriosa<br>
+                    che ancora oggi illumina il cammino della libertà.
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <div class="navigation">
+        <button class="nav-btn" id="prev-btn" onclick="changeSlide(-1)">← Precedente</button>
+        <button class="nav-btn" id="next-btn" onclick="changeSlide(1)">Successiva →</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+
+        document.getElementById('total-slides').textContent = totalSlides;
+
+        function showSlide(n) {
+            slides[currentSlide].classList.remove('active');
+            currentSlide = (n + totalSlides) % totalSlides;
+            slides[currentSlide].classList.add('active');
+
+            document.getElementById('current-slide').textContent = currentSlide + 1;
+
+            // Disabilita i pulsanti agli estremi
+            document.getElementById('prev-btn').disabled = currentSlide === 0;
+            document.getElementById('next-btn').disabled = currentSlide === totalSlides - 1;
+        }
+
+        function changeSlide(direction) {
+            if (direction === 1 && currentSlide < totalSlides - 1) {
+                showSlide(currentSlide + 1);
+            } else if (direction === -1 && currentSlide > 0) {
+                showSlide(currentSlide - 1);
+            }
+        }
+
+        // Navigazione con tastiera
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight' || e.key === ' ') {
+                e.preventDefault();
+                changeSlide(1);
+            } else if (e.key === 'ArrowLeft') {
+                e.preventDefault();
+                changeSlide(-1);
+            }
+        });
+
+        // Inizializza
+        showSlide(0);
+    </script>
+</body>
+</html>
